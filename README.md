@@ -63,7 +63,7 @@ Kursta eğitilen ve `30-diamond_model_complete.pkl` dosyasında saklanan ML boru
 - **Pandas & Pydantic**: Veri işleme ve girdi doğrulama
 
 ### Arayüz (Frontend)
-- **Next.js 14+ (App Router)**
+- **Next.js 16 (App Router)**
 - **React 19 & TypeScript**
 - **Tailwind CSS v4**: Dark mode & Glassmorphism tasarım
 - **Framer Motion**: Akıcı mikro animasyonlar
