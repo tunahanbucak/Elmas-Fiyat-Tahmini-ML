@@ -26,7 +26,7 @@ Kursta eğitilen ve `30-diamond_model_complete.pkl` dosyasında saklanan ML boru
 
 ```
 ┌───────────────────────────────────────────────────────────┐
-│              Next.js 14 Frontend (React)                   │
+│              Next.js 16 Frontend (React 19)               │
 │   (Tailwind CSS, Framer Motion, Visual SVG Configurator)  │
 └─────────────────────────────┬─────────────────────────────┘
                               │ REST API (JSON)

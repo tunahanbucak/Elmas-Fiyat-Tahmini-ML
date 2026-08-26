@@ -112,7 +112,7 @@ export default function Home() {
       <footer className="w-full border-t border-zinc-800/80 bg-[#0a0b0e] py-6 text-center text-xs text-zinc-400 font-mono">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>© 2026 GEMVAL AI — ELMAS DEĞERLEME PLATFORMU</span>
-          <span className="text-zinc-400 font-medium font-sans">Python 3.12 (FastAPI) + Next.js 14 (React)</span>
+          <span className="text-zinc-400 font-medium font-sans">Python 3.12 (FastAPI) + Next.js 16 (React 19)</span>
         </div>
       </footer>
 

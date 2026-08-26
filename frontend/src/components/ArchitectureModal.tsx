@@ -99,7 +99,7 @@ export const ArchitectureModal: React.FC<ArchitectureModalProps> = ({
                   <strong className="text-slate-200">Backend API:</strong> Python 3.12 + FastAPI asenkron REST API sunucusu.
                 </li>
                 <li>
-                  <strong className="text-slate-200">Frontend UI:</strong> Next.js 14 App Router + Tailwind CSS + Framer Motion.
+                  <strong className="text-zinc-200">Frontend UI:</strong> Next.js 16 App Router + Tailwind CSS v4 + Framer Motion.
                 </li>
                 <li>
                   <strong className="text-slate-200">ML Modeli:</strong> 50.000+ elmas verisinde eğitilmiş Support Vector Regressor.
