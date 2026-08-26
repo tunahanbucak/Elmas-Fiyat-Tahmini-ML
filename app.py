@@ -44,9 +44,17 @@ class DiamondFeatures(BaseModel):
     z: float = Field(..., example=3.98, description="Derinlik (mm)")
 
 
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+@app.get("/")
+async def home():
+    return {
+        "status": "online",
+        "service": "GemVal AI Diamond Price Prediction API",
+        "endpoints": {
+            "predict": "/predict (POST)",
+            "presets": "/api/presets (GET)",
+            "docs": "/docs"
+        }
+    }
 
 
 @app.get("/api/presets")
