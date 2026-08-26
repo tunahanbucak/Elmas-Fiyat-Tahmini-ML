@@ -23,6 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenArchitecture, isBackendCon
   return (
     <header className="w-full bg-[#0a0b0e] border-b border-zinc-800/80 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        {/* Logo & Brand */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-serif font-bold text-base">
             ◇
@@ -42,14 +43,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenArchitecture, isBackendCon
           </div>
         </div>
 
+        {/* Actions & Status */}
         <div className="flex items-center gap-3 relative">
           <div className="relative">
             <button
               onClick={() => setShowStatusHelp(!showStatusHelp)}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-medium flex items-center gap-2 transition-all ${isBackendConnected
+              className={`px-3 py-1.5 rounded-xl border text-xs font-medium flex items-center gap-2 transition-all ${
+                isBackendConnected
                   ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
                   : 'bg-amber-950/30 border-amber-500/30 text-amber-300'
-                }`}
+              }`}
             >
               <span className={`w-2 h-2 rounded-full ${isBackendConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400 animate-pulse'}`} />
               <span className="hidden sm:inline">
@@ -89,11 +92,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenArchitecture, isBackendCon
           </button>
 
           <a
-            href="https://github.com"
+            href="https://github.com/tunahanbucak/Elmas-Fiyat-Tahmini-ML"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white rounded-xl border border-zinc-800 transition-all"
-            title="GitHub Repository"
+            title="GitHub Kaynak Kodu"
           >
             <Code2 className="w-4 h-4 text-amber-400" />
           </a>
