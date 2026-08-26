@@ -1,13 +1,11 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import pickle
 import pandas as pd
 from pydantic import BaseModel, Field
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 
 app = FastAPI(
-    title="Elmas Fiyat Tahmin API",
+    title="GemVal AI — Elmas Fiyat Tahmin API",
     description="SVR Makine Öğrenmesi Modeli Tabanlı Elmas Değerleme API Servisi",
     version="1.0.0"
 )
@@ -20,9 +18,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Templates
-templates = Jinja2Templates(directory="templates")
 
 # Load model, encoders, and scaler saved during course training
 with open("30-diamond_model_complete.pkl", "rb") as f:
@@ -45,10 +40,12 @@ class DiamondFeatures(BaseModel):
 
 
 @app.get("/")
-async def home():
+def home():
     return {
         "status": "online",
         "service": "GemVal AI Diamond Price Prediction API",
+        "version": "1.0.0",
+        "documentation": "/docs",
         "endpoints": {
             "predict": "/predict (POST)",
             "presets": "/api/presets (GET)",
@@ -58,7 +55,7 @@ async def home():
 
 
 @app.get("/api/presets")
-async def get_presets():
+def get_presets():
     """Arayüzde hızlı seçim için önceden tanımlanmış örnek elmaslar"""
     return [
         {
@@ -79,50 +76,50 @@ async def get_presets():
         },
         {
             "id": "flawless_luxury",
-            "title": "2.0 Karat Yatırımlık Kusursuz",
-            "description": "D Rengi ve IF berraklıkta koleksiyonluk elmas",
+            "title": "2.0 Karat Flawless Koleksiyon",
+            "description": "Kusursuz berraklık ve renksiz nadir yatırım elması",
             "features": {
                 "carat": 2.0,
                 "cut": "Ideal",
                 "color": "D",
                 "clarity": "IF",
-                "depth": 62.0,
+                "depth": 60.8,
                 "table": 56.0,
                 "x": 8.10,
                 "y": 8.13,
-                "z": 5.03
+                "z": 4.94
             }
         },
         {
-            "id": "budget_sparkle",
-            "title": "0.5 Karat Günlük Şık Elmas",
-            "description": "Uygun fiyatlı ve temiz kesimli zarif elmas",
+            "id": "daily_sparkler",
+            "title": "0.5 Karat Günlük Şık",
+            "description": "Fiyat/performans oranı yüksek zarif tasarım",
             "features": {
                 "carat": 0.5,
                 "cut": "Very Good",
                 "color": "G",
-                "clarity": "SI1",
-                "depth": 62.8,
+                "clarity": "VS2",
+                "depth": 62.1,
                 "table": 58.0,
-                "x": 5.05,
-                "y": 5.08,
-                "z": 3.18
+                "x": 5.12,
+                "y": 5.15,
+                "z": 3.19
             }
         },
         {
-            "id": "statement_gem",
-            "title": "3.0 Karat Özel Koleksiyon",
-            "description": "Yüksek karat ağırlığı ve mükemmel cila",
+            "id": "high_carat_investment",
+            "title": "3.5 Karat Yüksek Yatırım",
+            "description": "Büyük karatlı koleksiyonluk yüksek segment taş",
             "features": {
-                "carat": 3.0,
+                "carat": 3.5,
                 "cut": "Premium",
                 "color": "F",
-                "clarity": "VVS2",
+                "clarity": "VVS1",
                 "depth": 61.2,
                 "table": 59.0,
-                "x": 9.25,
-                "y": 9.29,
-                "z": 5.67
+                "x": 9.65,
+                "y": 9.70,
+                "z": 5.92
             }
         }
     ]
@@ -130,38 +127,51 @@ async def get_presets():
 
 @app.post("/predict")
 @app.post("/api/predict")
-async def predict(features: DiamondFeatures):
-    # Giriş özellikleriyle bir DataFrame oluşturun
-    input_dict = features.model_dump()
-    input_data = pd.DataFrame([input_dict])
+def predict(features: DiamondFeatures):
+    try:
+        # Create single-row DataFrame for features
+        df = pd.DataFrame([{
+            'carat': features.carat,
+            'cut': features.cut,
+            'color': features.color,
+            'clarity': features.clarity,
+            'depth': features.depth,
+            'table': features.table,
+            'x': features.x,
+            'y': features.y,
+            'z': features.z
+        }])
 
-    # Kaydedilen etiket kodlayıcılarını uygulayın
-    for col in ['cut', 'color', 'clarity']:
-        input_data[col] = encoders[col].transform(input_data[col])
+        # Encode categorical columns
+        for col in ['cut', 'color', 'clarity']:
+            df[col] = encoders[col].transform(df[col])
 
-    # Kaydedilen standart ölçekleyiciyi uygulayın
-    input_scaled = scaler.transform(input_data)
+        # Scale all features
+        scaled_features = scaler.transform(df)
 
-    # Tahmin yap (SVR modeli tek çıktı üretir)
-    raw_prediction = float(model.predict(input_scaled)[0])
-    
-    # Fiyatın pozitif olmasını sağla
-    predicted_price = max(100.0, raw_prediction)
-    price_per_carat = predicted_price / max(0.01, features.carat)
+        # Make price prediction
+        prediction = model.predict(scaled_features)[0]
 
-    # Arayüz rozeti için fiyat aralığı etiketi (ML çıktısı değildir, UI yardımcısıdır)
-    if predicted_price < 1500:
-        tier = "Ekonomik Segment"
-    elif predicted_price < 5000:
-        tier = "Prestij Mücevher"
-    elif predicted_price < 15000:
-        tier = "Yatırımlık Segment"
-    else:
-        tier = "Özel Koleksiyon / Lüks"
+        # Ensure prediction is positive
+        predicted_price = round(max(0.0, float(prediction)), 2)
+        price_per_carat = round(predicted_price / max(0.01, features.carat), 2)
 
-    return {
-        "predicted_price": round(predicted_price, 2),
-        "price_per_carat": round(price_per_carat, 2),
-        "tier": tier,
-        "features": input_dict
-    }
+        # Market tier classification
+        tier = "Standart Segment"
+        if predicted_price > 10000:
+            tier = "Lüks Koleksiyon"
+        elif predicted_price > 5000:
+            tier = "Yatırımlık Segment"
+        elif predicted_price > 2000:
+            tier = "Fine Jewelry"
+
+        return {
+            "predicted_price": predicted_price,
+            "price_per_carat": price_per_carat,
+            "tier": tier,
+            "isBackendConnected": True,
+            "features": features.model_dump()
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
