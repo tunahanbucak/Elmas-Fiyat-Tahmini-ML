@@ -46,10 +46,22 @@ export const PredictorForm: React.FC<PredictorFormProps> = ({
   const [showAdvanced, setShowAdvanced] = useState(true);
 
   const updateField = (key: keyof DiamondFeatures, value: string | number) => {
-    onChange({
-      ...features,
-      [key]: value,
-    });
+    if (key === 'carat') {
+      const newCarat = typeof value === 'number' ? value : parseFloat(value as string) || 0.2;
+      const estimated = estimateDimensions(newCarat, features.depth);
+      onChange({
+        ...features,
+        carat: newCarat,
+        x: estimated.x,
+        y: estimated.y,
+        z: estimated.z,
+      });
+    } else {
+      onChange({
+        ...features,
+        [key]: value,
+      });
+    }
   };
 
   const handleAutoDimensions = () => {
