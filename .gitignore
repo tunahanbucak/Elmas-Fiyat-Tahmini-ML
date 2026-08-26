@@ -1,0 +1,18 @@
+# Python Virtual Environment & Caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE & OS Files
+.idea/
+.vscode/
+.DS_Store
+
+# Next.js & Node.js Dependencies
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+*.log
