@@ -1,6 +1,12 @@
 # 💎 GemVal AI — Makine Öğrenmesi Elmas Fiyat Tahmin Sistemi
 
-> Kursta eğitilen **Scikit-Learn (SVR)** Makine Öğrenmesi Modelini, **FastAPI** REST API servisi ve **Next.js 14 / React** arayüzü ile buluşturan modern tam donanımlı (Full-Stack) AI projesi.
+[![Live App (Vercel)](https://img.shields.io/badge/Live_App-Vercel-000000?style=for-the-badge&logo=vercel)](https://elmas-fiyat-tahmini-ml.vercel.app)
+[![API Server (Render)](https://img.shields.io/badge/API_Server-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://elmas-fiyat-api.onrender.com)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Next.js](https://img.shields.io/badge/Next.js-16.3-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+
+> Kursta eğitilen **Scikit-Learn (SVR)** Makine Öğrenmesi Modelini, **FastAPI** REST API servisi ve **Next.js 16 / React** arayüzü ile buluşturan modern tam donanımlı (Full-Stack) AI projesi.
 
 ---
 
