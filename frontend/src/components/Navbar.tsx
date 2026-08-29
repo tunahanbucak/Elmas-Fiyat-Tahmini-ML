@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenArchitecture, isBackendCon
             </button>
 
             {showStatusHelp && (
-              <div className="absolute right-0 mt-2 w-80 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl z-50 text-xs text-zinc-300 space-y-3">
+              <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-xs sm:w-80 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl z-50 text-xs text-zinc-300 space-y-3">
                 <div className="flex justify-between items-center pb-2 border-b border-zinc-800">
                   <span className="font-semibold text-white flex items-center gap-1.5">
                     <Terminal className="w-4 h-4 text-amber-400" /> Python Backend Çalıştırma

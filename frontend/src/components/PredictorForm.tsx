@@ -116,7 +116,7 @@ export const PredictorForm: React.FC<PredictorFormProps> = ({
         <label className="text-sm font-semibold text-zinc-200 block">
           Kesim Kalitesi (Cut) <span className="text-xs font-normal text-zinc-400">(Işık Parlaklığı)</span>
         </label>
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 sm:gap-2">
           {CUT_OPTIONS.map((c) => (
             <button
               key={c.value}
