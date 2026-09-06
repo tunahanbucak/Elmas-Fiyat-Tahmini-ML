@@ -1,0 +1,9 @@
+# GitHub Linguist Language Configuration
+# Veri setlerini, binary modelleri ve lock dosyalarını istatistik dışı bırakır.
+
+*.csv linguist-vendored=true
+*.pkl linguist-vendored=true
+*.joblib linguist-vendored=true
+*.json linguist-documentation=true
+*.ipynb linguist-documentation=true
+package-lock.json linguist-vendored=true
